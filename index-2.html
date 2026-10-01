@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>CHATNI TOP UP</title>
+<style>
+:root{
+  --bg:#05091d;--card:#0b1230;--card2:#0d1740;--blue:#1768ff;
+  --cyan:#21e6ff;--purple:#b52cff;--pink:#ff3ed1;--text:#fff;--muted:#aab7e8;
+  --line:#244fff;--green:#35f1a0;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:
+  radial-gradient(circle at 50% 10%,#111c55 0,#070b22 38%,#030617 100%);
+  color:var(--text);font-family:Arial,sans-serif;min-height:100vh;padding-bottom:92px;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{max-width:1150px;margin:auto;padding:16px}
+.topbar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.logo{font-weight:900;font-size:20px;letter-spacing:.5px}
+.header-actions{margin-left:auto;display:flex;gap:8px}
+.icon-btn{width:43px;height:43px;border:1px solid #3158ff;border-radius:50%;background:#0a1234;color:#fff;font-size:21px;box-shadow:0 0 16px #173cff55}
+.search-row{display:flex;gap:10px;margin-bottom:16px}
+.search{flex:1;height:56px;border:1px solid #345dff;border-radius:30px;background:#08102d;color:#fff;padding:0 20px;font-size:17px;outline:none;box-shadow:0 0 18px #173cff33}
+.search::placeholder{color:#9eabd6}
+.bell{width:58px}
+.page{display:none}
+.page.active{display:block}
+.hero{
+  position:relative;overflow:hidden;min-height:500px;border:1px solid #3155ff;border-radius:28px;
+  background:
+   radial-gradient(circle at 80% 70%,#1b49b7aa,transparent 30%),
+   linear-gradient(135deg,#101b50,#071342 55%,#081b5b);
+  box-shadow:0 0 30px #174cff22,inset 0 0 30px #183cff18;padding:42px 34px;margin-bottom:34px;
+}
+.hero:before{content:"";position:absolute;inset:0;opacity:.25;background:repeating-linear-gradient(135deg,transparent 0 35px,#315dff 36px 38px,transparent 39px 70px);pointer-events:none}
+.hero-content{position:relative;z-index:3;max-width:63%}
+.hero h1{font-size:46px;font-style:italic;margin:0 0 12px;font-weight:1000;background:linear-gradient(90deg,#fff,#64d8ff);-webkit-background-clip:text;color:transparent}
+.hero h2{font-size:25px;margin:0 0 28px}
+.hero .slogan{font-size:22px;line-height:1.55;color:#ff55e5;font-weight:800}
+.features{display:flex;gap:18px;flex-wrap:wrap;margin:25px 0}
+.feature{font-size:14px;font-weight:700;display:flex;gap:8px;align-items:center}
+.feature b{font-size:27px;color:#22eaff}
+.cta{
+ border:0;border-radius:34px;padding:17px 30px;color:#fff;font-weight:900;font-size:18px;
+ background:linear-gradient(90deg,#ca1eff,#2c73ff);box-shadow:0 0 25px #a82cff77
+}
+.hero-cutout{
+ position:absolute;right:-15px;bottom:-8px;width:52%;max-width:560px;max-height:92%;
+ object-fit:contain;object-position:center bottom;z-index:2;
+ /* CUTOUT MODE: black background blends away */
+ mix-blend-mode:screen;
+ filter:drop-shadow(0 0 22px #168aff55);
+ pointer-events:none;
+}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:18px 4px 12px}
+.section-head h2{font-size:24px;margin:0}
+.link{color:#b77cff;text-decoration:underline;cursor:pointer}
+.games{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.game,.package,.review-card,.support-card,.order-card,.benefit{
+ border:1px solid #2454ff;border-radius:20px;background:linear-gradient(145deg,#0b1439,#08102c);
+ box-shadow:0 0 16px #173cff18;padding:18px
+}
+.game{text-align:center;transition:.2s}
+.game:hover{transform:translateY(-3px);box-shadow:0 0 25px #1e62ff55}
+.game-icon{height:75px;width:75px;margin:auto;border:2px solid #1f5bff;border-radius:22px;display:grid;place-items:center;font-size:39px;background:#0b163d}
+.game-name{margin-top:12px;font-weight:700}
+.tabs{display:flex;gap:10px;overflow:auto;padding:4px 0 12px}
+.tab{white-space:nowrap;border:1px solid #315bff;border-radius:24px;padding:11px 17px;background:#0a1234;color:#b9c6ef}
+.tab.active{background:linear-gradient(90deg,#b728ff,#226dff);color:#fff;box-shadow:0 0 18px #7c35ff66}
+.packages{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.package{position:relative;text-align:center}
+.diamond{font-size:38px;filter:drop-shadow(0 0 10px #31d8ff);animation:shine 1.8s infinite alternate}
+@keyframes shine{to{filter:drop-shadow(0 0 22px #43eaff)}}
+.package h3{margin:6px 0}.price{font-size:22px;font-weight:900;color:#62eaff}
+.buy{margin-top:12px;border:0;border-radius:24px;padding:11px 18px;background:linear-gradient(90deg,#bc27ff,#2271ff);color:#fff;font-weight:900}
+.uid-box{margin:18px 0;padding:18px;border:1px solid #2c5dff;border-radius:22px;background:#08122f}
+.uid-box label{display:block;font-weight:800;margin-bottom:8px}
+.input{width:100%;height:50px;border-radius:14px;border:1px solid #315cff;background:#050b23;color:#fff;padding:0 14px;outline:none}
+.payment{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+.pay{padding:16px;border-radius:18px;border:1px solid #315cff;background:#0a1336}
+.pay strong{display:block;font-size:17px}.pay span{color:#64e9ff;font-size:18px;font-weight:900}
+.notice{margin-top:15px;color:#ffd86b;font-weight:800}
+.submit{width:100%;margin-top:15px;padding:15px;border:0;border-radius:17px;background:linear-gradient(90deg,#18cfa1,#1477ff);color:#fff;font-weight:900}
+.orders{display:grid;gap:12px;margin-top:14px}
+.order-card{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.status{color:#ffd45b;font-weight:900}
+.review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.review-card .stars{color:#ffd52e;font-size:20px}
+.review-card p{line-height:1.55;color:#d7def8}
+.review-form{margin-top:18px}
+.support-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.support-card h3{margin-top:0}
+.support-link{display:block;color:#6feaff;font-weight:800;margin:10px 0;text-decoration:none}
+.modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;padding:18px;z-index:100}
+.modal.show{display:flex}
+.modal-box{width:min(520px,100%);max-height:90vh;overflow:auto;background:#08102f;border:1px solid #315dff;border-radius:24px;padding:22px;box-shadow:0 0 45px #174cff66}
+.modal-head{display:flex;justify-content:space-between;align-items:center}
+.close{border:0;background:none;color:#fff;font-size:26px}
+.auth-tabs{display:flex;gap:8px;margin:15px 0}
+.auth-tabs button{flex:1;padding:11px;border-radius:14px;border:1px solid #315dff;background:#0b153b;color:#fff}
+.auth-tabs .active{background:linear-gradient(90deg,#b62aff,#2774ff)}
+.form{display:grid;gap:12px}
+.form label{font-weight:800}
+.bottom{
+ position:fixed;left:0;right:0;bottom:0;z-index:80;background:#050a20eF;border-top:1px solid #244dff;
+ backdrop-filter:blur(14px);display:grid;grid-template-columns:repeat(5,1fr);padding:8px max(8px,calc((100vw - 900px)/2))
+}
+.nav-btn{border:0;background:transparent;color:#aeb9dc;padding:5px 2px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px}
+.nav-icon{font-size:25px;width:47px;height:39px;display:grid;place-items:center;border-radius:50%}
+.nav-btn.active{color:#fff}
+.nav-btn.active .nav-icon{background:linear-gradient(135deg,#a923ff,#2379ff);box-shadow:0 0 24px #b62cff;transform:translateY(-5px)}
+.toast{position:fixed;left:50%;bottom:95px;transform:translateX(-50%);background:#101b42;border:1px solid #3a64ff;color:#fff;padding:12px 18px;border-radius:14px;display:none;z-index:150;max-width:90%}
+.toast.show{display:block}
+.small{font-size:13px;color:#9eabd2}
+@media(max-width:720px){
+ .app{padding:12px}
+ .hero{min-height:700px;padding:35px 20px}
+ .hero-content{max-width:100%}
+ .hero h1{font-size:36px}
+ .hero .slogan{font-size:19px}
+ .features{gap:12px}
+ .hero-cutout{width:72%;right:-8px;bottom:-4px;max-height:55%}
+ .games{grid-template-columns:repeat(4,1fr);gap:8px}
+ .game{padding:10px 5px;border-radius:16px}
+ .game-icon{width:58px;height:58px;font-size:29px;border-radius:18px}
+ .game-name{font-size:12px}
+ .packages{grid-template-columns:repeat(2,1fr)}
+ .payment,.review-grid,.support-grid{grid-template-columns:1fr}
+ .section-head h2{font-size:21px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+<header class="topbar">
+  <div class="logo">🎮 CHATNI TOP UP</div>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="openAuth()">👤</button>
+    <button class="icon-btn" onclick="showToast('🔔 No new notifications')">🔔</button>
+  </div>
+</header>
+
+<div class="search-row">
+  <input id="search" class="search" placeholder="🔍 Search for games, packages, or services..." oninput="searchAll()">
+  <button class="icon-btn bell" onclick="showToast('🔔 Notifications')">🔔</button>
+</div>
+
+<main>
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="hero-content">
+      <h1>CHATNI TOP UP</h1>
+      <h2>চাটনি টপআপ</h2>
+      <div class="slogan">“পেমেন্ট হোক আরও সহজ,<br>টপআপ হোক আরও নিরাপদ!”</div>
+      <div class="features">
+        <div class="feature"><b>ϟ</b>Instant<br>Delivery</div>
+        <div class="feature"><b>🛡</b>100% Secure<br>& Trusted</div>
+        <div class="feature"><b>♙</b>24/7<br>Customer Support</div>
+      </div>
+      <button class="cta" onclick="go('topup')">Explore Packages →</button>
+    </div>
+    <img class="hero-cutout" src="hero-transparent.png" alt="CHATNI TOP UP">
+  </div>
+
+  <div class="section-head">
+    <h2>🎮 Popular Games</h2><span class="link" onclick="go('topup')">View All Games →</span>
+  </div>
+  <div class="games">
+    <div class="game"><div class="game-icon">🔥</div><div class="game-name">Free Fire</div></div>
+    <div class="game"><div class="game-icon">🎯</div><div class="game-name">PUBG Mobile</div></div>
+    <div class="game"><div class="game-icon">⚽</div><div class="game-name">eFootball</div></div>
+    <div class="game"><div class="game-icon">🔫</div><div class="game-name">Call of Duty</div></div>
+    <div class="game"><div class="game-icon">◼️</div><div class="game-name">Roblox</div></div>
+    <div class="game"><div class="game-icon">🔻</div><div class="game-name">Valorant</div></div>
+    <div class="game"><div class="game-icon">🌸</div><div class="game-name">Genshin</div></div>
+    <div class="game"><div class="game-icon">⚔️</div><div class="game-name">Clash</div></div>
+  </div>
+</section>
+
+<section id="topup" class="page">
+  <div class="section-head"><h2>💎 Free Fire Top Up</h2></div>
+  <div class="uid-box">
+    <label>Free Fire UID *</label>
+    <input id="uid" class="input" inputmode="numeric" placeholder="আপনার Free Fire UID লিখুন">
+    <div class="small" style="margin-top:7px">সঠিক UID দেওয়ার দায়িত্ব ক্রেতার।</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="setCategory('diamond',this)">💎 Diamonds</button>
+    <button class="tab" onclick="setCategory('membership',this)">📅 Weekly / Monthly</button>
+    <button class="tab" onclick="setCategory('level',this)">🚀 Level Up</button>
+  </div>
+  <div id="packages" class="packages"></div>
+
+  <div class="payment">
+    <div class="pay"><strong>bKash</strong><span>01316897399</span></div>
+    <div class="pay"><strong>Nagad</strong><span>01410897399</span></div>
+    <div class="pay"><strong>Upay</strong><span>01316897399</span></div>
+  </div>
+  <div class="notice">💳 Payment করতে Send Money করুন</div>
+
+  <div class="uid-box">
+    <label>Transaction ID *</label>
+    <input id="trx" class="input" placeholder="Transaction ID লিখুন">
+    <button class="submit" onclick="submitOrder()">📦 ORDER SUBMIT</button>
+  </div>
+
+  <div class="section-head"><h2>📋 My Orders</h2></div>
+  <div id="orders" class="orders"></div>
+</section>
+
+<section id="reviews" class="page">
+  <div class="section-head"><h2>⭐ Customer Reviews</h2></div>
+  <div class="review-grid">
+    <div class="review-card"><div class="stars">★★★★★</div><p>আপনার আসল customer feedback এখানে দেখানো হবে।</p><div class="small">Verified customer</div></div>
+    <div class="review-card"><div class="stars">★★★★★</div><p>Order complete হওয়ার পর customer review দিতে পারবে।</p><div class="small">Verified customer</div></div>
+  </div>
+  <div class="review-card review-form">
+    <h3>আপনার Review দিন</h3>
+    <input id="reviewName" class="input" placeholder="আপনার নাম">
+    <br><br>
+    <input id="reviewText" class="input" placeholder="আপনার feedback লিখুন">
+    <button class="submit" onclick="addReview()">⭐ Submit Review</button>
+  </div>
+</section>
+
+<section id="live" class="page">
+  <div class="section-head"><h2>💬 Live Chat</h2></div>
+  <div class="support-card">
+    <h3>CHATNI TOP UP Support</h3>
+    <p>Order বা payment সংক্রান্ত সাহায্যের জন্য সরাসরি যোগাযোগ করুন।</p>
+    <a class="support-link" href="https://t.me/Ahsanvai10" target="_blank">✈️ Telegram: @Ahsanvai10</a>
+    <a class="support-link" href="https://wa.me/8801410897399" target="_blank">💬 WhatsApp: 01410897399</a>
+    <a class="support-link" href="https://wa.me/8801316897399" target="_blank">💬 WhatsApp: 01316897399</a>
+  </div>
+</section>
+
+<section id="support" class="page">
+  <div class="section-head"><h2>🎧 Support</h2></div>
+  <div class="support-grid">
+    <div class="support-card"><h3>💳 Payment Support</h3><p>bKash: 01316897399<br>Nagad: 01410897399<br>Upay: 01316897399</p></div>
+    <div class="support-card"><h3>📲 Contact</h3><p>Telegram: @Ahsanvai10</p><p>WhatsApp: 01410897399<br>01316897399</p></div>
+  </div>
+</section>
+</main>
+</div>
+
+<nav class="bottom">
+ <button class="nav-btn active" data-page="home" onclick="go('home')"><span class="nav-icon">🏠</span>Home</button>
+ <button class="nav-btn" data-page="topup" onclick="go('topup')"><span class="nav-icon">💎</span>Topup</button>
+ <button class="nav-btn" data-page="reviews" onclick="go('reviews')"><span class="nav-icon">⭐</span>Reviews</button>
+ <button class="nav-btn" data-page="live" onclick="go('live')"><span class="nav-icon">💬</span>Live</button>
+ <button class="nav-btn" data-page="support" onclick="go('support')"><span class="nav-icon">🎧</span>Support</button>
+</nav>
+
+<div id="authModal" class="modal">
+ <div class="modal-box">
+  <div class="modal-head"><h2>👤 Account</h2><button class="close" onclick="closeAuth()">×</button></div>
+  <div class="auth-tabs">
+   <button id="loginTab" class="active" onclick="authMode('login')">Login</button>
+   <button id="signupTab" onclick="authMode('signup')">Sign Up</button>
+  </div>
+  <div class="form">
+   <label>Mobile / Email</label><input id="authUser" class="input" placeholder="Mobile number or email">
+   <label>Password</label><input id="authPass" class="input" type="password" placeholder="Password">
+   <button class="submit" onclick="saveAccount()">Continue</button>
+  </div>
+  <p class="small">এটি এখন frontend account UI। Real secure authentication পরে backend-এর সঙ্গে যুক্ত হবে।</p>
+ </div>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+const data={
+ diamond:[
+  ['25 Diamonds','৳23'],['50 Diamonds','৳40'],['115 Diamonds','৳82'],['240 Diamonds','৳158'],
+  ['610 Diamonds','৳392'],['1240 Diamonds','৳780'],['2530 Diamonds','৳1560']
+ ],
+ membership:[
+  ['Weekly','৳159'],['Weekly Lite','৳45'],['Monthly','৳775']
+ ],
+ level:[
+  ['Level Up-6','৳50'],['Level Up-10','৳80'],['Level Up-15','৳80'],
+  ['Level Up-20','৳80'],['Level Up-25','৳80'],['Level Up-30','৳130']
+ ]
+};
+let category='diamond',selected=null,auth='login';
+
+function go(id){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.nav-btn').forEach(x=>x.classList.toggle('active',x.dataset.page===id));
+ window.scrollTo({top:0,behavior:'smooth'});
+ if(id==='topup') renderPackages();
+ if(id==='topup') renderOrders();
+}
+function setCategory(c,btn){
+ category=c;
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+ btn.classList.add('active');selected=null;renderPackages();
+}
+function renderPackages(){
+ const box=document.getElementById('packages');box.innerHTML='';
+ data[category].forEach((p,i)=>{
+  const d=document.createElement('div');d.className='package';
+  d.innerHTML=`<div class="diamond">${category==='diamond'?'💎':category==='membership'?'📅':'🚀'}</div>
+   <h3>${p[0]}</h3><div class="price">${p[1]}</div>
+   <button class="buy" onclick="selectPackage(${i})">SELECT</button>`;
+  box.appendChild(d);
+ });
+}
+function selectPackage(i){
+ selected=data[category][i];
+ showToast('✅ '+selected[0]+' selected');
+}
+function submitOrder(){
+ const uid=document.getElementById('uid').value.trim(),trx=document.getElementById('trx').value.trim();
+ if(!uid)return showToast('⚠️ UID দিন');
+ if(!selected)return showToast('⚠️ একটি package select করুন');
+ if(!trx)return showToast('⚠️ Transaction ID দিন');
+ const orders=JSON.parse(localStorage.getItem('chatni_orders')||'[]');
+ orders.unshift({id:Date.now(),uid,product:selected[0],price:selected[1],trx,status:'Payment Pending'});
+ localStorage.setItem('chatni_orders',JSON.stringify(orders));
+ document.getElementById('trx').value='';
+ showToast('✅ Order submitted');
+ renderOrders();
+}
+function renderOrders(){
+ const box=document.getElementById('orders');if(!box)return;
+ const orders=JSON.parse(localStorage.getItem('chatni_orders')||'[]');
+ box.innerHTML=orders.length?orders.map(o=>`<div class="order-card"><div><b>${o.product}</b><div class="small">UID: ${o.uid} · ${o.price}</div><div class="small">TRX: ${o.trx}</div></div><span class="status">${o.status}</span></div>`).join(''):'<div class="small">এখনো কোনো order নেই।</div>';
+}
+function openAuth(){document.getElementById('authModal').classList.add('show')}
+function closeAuth(){document.getElementById('authModal').classList.remove('show')}
+function authMode(m){
+ auth=m;document.getElementById('loginTab').classList.toggle('active',m==='login');document.getElementById('signupTab').classList.toggle('active',m==='signup');
+}
+function saveAccount(){
+ const u=document.getElementById('authUser').value.trim(),p=document.getElementById('authPass').value;
+ if(!u||!p)return showToast('⚠️ তথ্য পূরণ করুন');
+ localStorage.setItem('chatni_user',JSON.stringify({u,p}));
+ closeAuth();showToast(auth==='login'?'✅ Login UI complete':'✅ Sign Up complete');
+}
+function addReview(){
+ const n=document.getElementById('reviewName').value.trim(),t=document.getElementById('reviewText').value.trim();
+ if(!n||!t)return showToast('⚠️ নাম ও review দিন');
+ const arr=JSON.parse(localStorage.getItem('chatni_reviews')||'[]');arr.unshift({n,t});localStorage.setItem('chatni_reviews',JSON.stringify(arr));
+ document.getElementById('reviewName').value='';document.getElementById('reviewText').value='';
+ showToast('✅ Review submitted');
+}
+function searchAll(){
+ const q=document.getElementById('search').value.toLowerCase();
+ if(q.includes('weekly')||q.includes('monthly')||q.includes('diamond')||q.includes('uid'))go('topup');
+}
+function showToast(msg){
+ const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__toast);
+ window.__toast=setTimeout(()=>t.classList.remove('show'),2200);
+}
+renderPackages();renderOrders();
+</script>
+</body>
+</html>
