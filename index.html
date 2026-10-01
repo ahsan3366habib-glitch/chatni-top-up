@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHATNI TOP UP</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:root{
+  --bg:#03040d;
+  --panel:#080d22;
+  --panel2:#0c1330;
+  --blue:#1677ff;
+  --cyan:#00d9ff;
+  --purple:#8b2cff;
+  --pink:#f52cff;
+  --green:#23f0a7;
+  --text:#fff;
+  --muted:#98a4c7;
+  --line:rgba(42,100,255,.45);
+}
+
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(65,0,255,.18),transparent 30%),
+    radial-gradient(circle at 85% 20%,rgba(0,210,255,.12),transparent 28%),
+    #03040d;
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.012) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.012) 1px,transparent 1px);
+  background-size:45px 45px;
+  mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+button{
+  font:inherit;
+  cursor:pointer;
+}
+
+::-webkit-scrollbar{
+  width:5px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(var(--purple),var(--cyan));
+  border-radius:20px;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:235px;
+  padding:20px 15px;
+  background:rgba(3,5,18,.96);
+  border-right:1px solid rgba(75,62,255,.35);
+  z-index:50;
+}
+
+.logo{
+  height:72px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:5px 8px 18px;
+}
+
+.logo-mark{
+  width:58px;
+  height:58px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  font-size:35px;
+  background:
+    radial-gradient(circle,#a92dff,#1623a7 55%,#050715);
+  border:1px solid #7355ff;
+  box-shadow:0 0 20px #722cff;
+}
+
+.logo-text strong{
+  display:block;
+  font-size:25px;
+  font-weight:1000;
+  font-style:italic;
+  background:linear-gradient(90deg,#fff,#55cfff,#b43cff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.logo-text span{
+  color:#ddd;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.nav{
+  margin-top:12px;
+}
+
+.nav button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#e7ebff;
+  padding:13px 15px;
+  margin:4px 0;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-weight:bold;
+  transition:.25s;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:linear-gradient(100deg,rgba(132,30,255,.9),rgba(28,75,255,.45));
+  box-shadow:0 0 25px rgba(130,35,255,.35);
+}
+
+.nav-icon{
+  width:27px;
+  text-align:center;
+  font-size:22px;
+}
+
+.badge{
+  margin-left:auto;
+  min-width:23px;
+  height:23px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#ff285c;
+  font-size:12px;
+}
+
+/* premium box */
+
+.premium{
+  position:absolute;
+  left:15px;
+  right:15px;
+  bottom:105px;
+  padding:17px;
+  border:1px solid #8d2dff;
+  border-radius:20px;
+  background:
+    linear-gradient(145deg,rgba(35,17,80,.9),rgba(8,12,38,.95));
+  box-shadow:0 0 25px rgba(137,31,255,.22);
+}
+
+.premium h3{
+  font-size:17px;
+  margin-bottom:10px;
+}
+
+.premium p{
+  color:#dce2ff;
+  font-size:12px;
+  line-height:1.9;
+}
+
+.premium button{
+  width:100%;
+  border:0;
+  margin-top:12px;
+  padding:11px;
+  border-radius:13px;
+  color:white;
+  font-weight:bold;
+  background:linear-gradient(90deg,#a51fff,#315cff);
+  box-shadow:0 0 20px rgba(142,38,255,.4);
+}
+
+/* ================= MAIN ================= */
+
+.main{
+  margin-left:235px;
+  min-height:100vh;
+  padding:15px 20px 90px;
+}
+
+.topbar{
+  height:62px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-bottom:12px;
+}
+
+.search{
+  flex:1;
+  height:46px;
+  border:1px solid #244cff;
+  border-radius:25px;
+  background:rgba(5,10,31,.85);
+  display:flex;
+  align-items:center;
+  padding:0 17px;
+  box-shadow:0 0 18px rgba(26,80,255,.16);
+}
+
+.search span{
+  font-size:22px;
+  margin-right:12px;
+}
+
+.search input{
+  width:100%;
+  background:none;
+  border:0;
+  outline:none;
+  color:white;
+  font-size:14px;
+}
+
+.search input::placeholder{
+  color:#9aa8ca;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.icon-btn{
+  width:43px;
+  height:43px;
+  border-radius:50%;
+  border:1px solid #4735ff;
+  background:#0b1230;
+  color:white;
+  display:grid;
+  place-items:center;
+  font-size:20px;
+}
+
+.wallet{
+  height:43px;
+  padding:0 14px;
+  border-radius:24px;
+  border:1px solid #573cff;
+  background:#101536;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:bold;
+}
+
+.wallet b{
+  color:#66dcff;
+}
+
+.profile{
+  height:43px;
+  padding:3px 7px 3px 3px;
+  border-radius:25px;
+  border:1px solid #6631ff;
+  background:#0d1230;
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  object-fit:cover;
+  background:linear-gradient(135deg,#822cff,#08bfff);
+}
+
+.profile-info{
+  font-size:12px;
+}
+
+.profile-info strong{
+  display:block;
+}
+
+.profile-info span{
+  color:#aab3d0;
+}
+
+/* ================= DASHBOARD GRID ================= */
+
+.dashboard{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 320px;
+  gap:15px;
+}
+
+.left{
+  min-width:0;
+}
+
+.right{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  height:337px;
+  position:relative;
+  overflow:hidden;
+  border-radius:23px;
+  border:1px solid #5537ff;
+  background:
+    radial-gradient(circle at 80% 45%,rgba(0,208,255,.35),transparent 25%),
+    radial-gradient(circle at 40% 40%,rgba(120,0,255,.4),transparent 40%),
+    linear-gradient(115deg,#040717,#07135c 55%,#12072e);
+  box-shadow:
+    inset 0 0 35px rgba(35,50,255,.2),
+    0 0 25px rgba(83,37,255,.2);
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 73% 50%,rgba(255,255,255,.15),transparent 10%),
+    repeating-linear-gradient(130deg,transparent 0 12px,rgba(40,135,255,.06) 13px 14px);
+}
+
+.hero-content{
+  position:relative;
+  z-index:3;
+  padding:38px 28px;
+  width:55%;
+}
+
+.hero h1{
+  font-size:43px;
+  line-height:1;
+  font-style:italic;
+  font-weight:1000;
+  letter-spacing:-2px;
+  text-transform:uppercase;
+  background:linear-gradient(90deg,#fff,#d8eaff,#55baff,#b83dff);
+  -webkit-background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 0 12px rgba(95,111,255,.5));
+}
+
+.hero h2{
+  margin-top:8px;
+  font-size:22px;
+  color:#fff;
+}
+
+.hero p{
+  margin-top:13px;
+  color:#e4e9ff;
+  line-height:1.7;
+  font-size:14px;
+}
+
+.hero p b{
+  color:#ff70ff;
+}
+
+.hero-points{
+  display:flex;
+  gap:18px;
+  margin-top:18px;
+}
+
+.hero-point{
+  display:flex;
+  gap:7px;
+  align-items:center;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.hero-point i{
+  color:#59dfff;
+  font-style:normal;
+  font-size:22px;
+}
+
+.hero-btn{
+  margin-top:20px;
+  padding:13px 23px;
+  border:0;
+  border-radius:28px;
+  color:white;
+  font-weight:900;
+  background:linear-gradient(90deg,#c124ff,#246aff);
+  box-shadow:
+    0 0 20px rgba(163,35,255,.55),
+    0 0 40px rgba(38,95,255,.25);
+  transition:.2s;
+}
+
+.hero-btn:hover{
+  transform:translateY(-2px) scale(1.02);
+}
+
+/* HERO PHOTO */
+
+.hero-photo{
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:50%;
+  height:100%;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:2;
+}
+
+.hero-photo img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  filter:
+    drop-shadow(0 0 12px #168dff)
+    drop-shadow(0 0 25px #7b25ff);
+  animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-7px)}
+}
+
+.hero-crown{
+  position:absolute;
+  right:22%;
+  top:25px;
+  font-size:45px;
+  filter:drop-shadow(0 0 12px #fff);
+  transform:rotate(-15deg);
+}
+
+/* ================= SECTION ================= */
+
+.section{
+  margin-top:14px;
+  padding:12px 8px 0;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.section-head h2{
+  font-size:17px;
+}
+
+.section-head a{
+  color:#b77cff;
+  font-size:12px;
+}
+
+/* ================= GAMES ================= */
+
+.games{
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:10px;
+}
+
+.game{
+  min-width:0;
+  padding:10px 6px;
+  text-align:center;
+  border-radius:15px;
+  background:linear-gradient(145deg,#101b3d,#080e25);
+  border:1px solid rgba(40,105,255,.5);
+  transition:.25s;
+}
+
+.game:hover{
+  transform:translateY(-4px);
+  border-color:#b52dff;
+  box-shadow:0 0 20px rgba(123,37,255,.3);
+}
+
+.game-img{
+  width:56px;
+  height:56px;
+  margin:auto;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  font-size:29px;
+  background:
+    linear-gradient(135deg,#172c66,#10152d);
+  border:1px solid #325cff;
+}
+
+.game span{
+  display:block;
+  margin-top:7px;
+  font-size:11px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* ================= PACKAGES ================= */
+
+.package-tabs{
+  display:flex;
+  gap:7px;
+}
+
+.package-tabs button{
+  border:0;
+  padding:8px 15px;
+  border-radius:20px;
+  background:#111b3a;
+  color:#c5cce5;
+  font-size:12px;
+}
+
+.package-tabs button.active{
+  color:white;
+  background:linear-gradient(90deg,#9e24ff,#385cff);
+  box-shadow:0 0 15px rgba(126,34,255,.35);
+}
+
+.packages{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:9px;
+}
+
+.package{
+  position:relative;
+  overflow:hidden;
+  padding:15px 9px 10px;
+  border-radius:16px;
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 20%,rgba(0,211,255,.15),transparent 40%),
+    linear-gradient(145deg,#0e1940,#070b20);
+  border:1px solid #255cff;
+  box-shadow:inset 0 0 18px rgba(35,65,255,.12);
+  transition:.25s;
+}
+
+.package:hover{
+  transform:translateY(-5px);
+  border-color:#b72eff;
+  box-shadow:
+    0 0 22px rgba(144,34,255,.35),
+    inset 0 0 20px rgba(26,75,255,.15);
+}
+
+.package.popular:before{
+  content:"Most Popular";
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  padding:4px 10px;
+  border-radius:0 0 9px 9px;
+  background:linear-gradient(90deg,#a725ff,#5b2dff);
+  font-size:9px;
+  font-weight:bold;
+}
+
+.diamond{
+  font-size:44px;
+  margin:4px 0;
+  display:inline-block;
+  animation:diamondGlow 1.8s infinite alternate;
+}
+
+@keyframes diamondGlow{
+  from{
+    transform:scale(1);
+    filter:
+      drop-shadow(0 0 3px #00eaff)
+      drop-shadow(0 0 8px #008cff);
+  }
+  to{
+    transform:scale(1.09);
+    filter:
+      drop-shadow(0 0 8px #00eaff)
+      drop-shadow(0 0 20px #008cff)
+      drop-shadow(0 0 28px #a22cff);
+  }
+}
+
+.package h3{
+  font-size:14px;
+  margin-top:2px;
+}
+
+.price{
+  color:#ff71ff;
+  font-size:17px;
+  font-weight:900;
+  margin:5px 0 9px;
+}
+
+.order-btn{
+  width:100%;
+  padding:8px 5px;
+  border:0;
+  border-radius:10px;
+  color:white;
+  font-size:11px;
+  font-weight:bold;
+  background:linear-gradient(90deg,#a824ff,#126dff);
+  box-shadow:0 0 12px rgba(92,40,255,.3);
+}
+
+/* ================= TRUST ================= */
+
+.trust{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:13px;
+  padding:13px;
+  border-radius:17px;
+  border:1px solid #8b25ff;
+  background:linear-gradient(90deg,rgba(101,20,150,.18),rgba(14,46,130,.18));
+}
+
+.trust-item{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.trust-item b{
+  color:#d957ff;
+  font-size:22px;
+}
+
+/* ================= RIGHT PANELS ================= */
+
+.panel{
+  border:1px solid rgba(53,97,255,.55);
+  border-radius:18px;
+  background:
+    linear-gradient(145deg,rgba(11,20,50,.96),rgba(5,9,27,.96));
+  overflow:hidden;
+  box-shadow:0 0 20px rgba(16,72,255,.08);
+}
+
+.panel-head{
+  padding:15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid rgba(66,85,170,.25);
+}
+
+.panel-head h3{
+  font-size:16px;
+}
+
+.panel-head a{
+  font-size:11px;
+  color:#ca7aff;
+}
+
+.orders{
+  padding:5px 12px;
+}
+
+.order{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 0;
+  border-bottom:1px solid rgba(70,85,150,.2);
+}
+
+.order:last-child{
+  border-bottom:0;
+}
+
+.order-avatar{
+  width:39px;
+  height:39px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#673cff,#11cfff);
+  display:grid;
+  place-items:center;
+  font-size:18px;
+}
+
+.order-info{
+  flex:1;
+  min-width:0;
+}
+
+.order-info strong{
+  display:block;
+  font-size:12px;
+}
+
+.order-info span{
+  display:block;
+  color:#8492b8;
+  font-size:10px;
+  margin-top:3px;
+}
+
+.status{
+  font-size:9px;
+  padding:5px 8px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.completed{
+  color:#32ffb0;
+  border:1px solid rgba(40,255,171,.4);
+  background:rgba(30,255,168,.1);
+}
+
+.processing{
+  color:#ffc45b;
+  border:1px solid rgba(255,193,65,.4);
+  background:rgba(255,193,65,.08);
+}
+
+/* chat */
+
+.chat{
+  padding:5px 12px 12px;
+}
+
+.chat-msg{
+  display:flex;
+  gap:9px;
+  padding:9px 0;
+}
+
+.chat-user{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ff32dc,#246aff);
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+}
+
+.chat-msg strong{
+  font-size:11px;
+}
+
+.chat-msg p{
+  color:#a8b1cc;
+  font-size:10px;
+  margin-top:3px;
+}
+
+.chat-input{
+  display:flex;
+  gap:6px;
+  margin-top:5px;
+}
+
+.chat-input input{
+  flex:1;
+  min-width:0;
+  border:1px solid #253d89;
+  border-radius:20px;
+  background:#080f28;
+  padding:9px 12px;
+  outline:0;
+  color:white;
+  font-size:11px;
+}
+
+.chat-input button{
+  width:37px;
+  border:0;
+  border-radius:50%;
+  background:linear-gradient(135deg,#a425ff,#246bff);
+  color:white;
+}
+
+/* announcements */
+
+.announcement{
+  padding:5px 12px 12px;
+}
+
+.announce{
+  display:flex;
+  gap:9px;
+  padding:9px 0;
+  border-bottom:1px solid rgba(70,85,150,.2);
+}
+
+.announce:last-child{
+  border:0;
+}
+
+.announce-icon{
+  width:31px;
+  height:31px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:#10235a;
+}
+
+.announce strong{
+  font-size:10px;
+}
+
+.announce p{
+  color:#8e9abb;
+  font-size:9px;
+  margin-top:3px;
+}
+
+/* ================= BOTTOM ================= */
+
+.bottom{
+  position:fixed;
+  left:235px;
+  right:0;
+  bottom:0;
+  height:66px;
+  z-index:45;
+  display:flex;
+  justify-content:center;
+  background:rgba(3,5,18,.94);
+  border-top:1px solid rgba(75,60,255,.35);
+  backdrop-filter:blur(15px);
+}
+
+.bottom-inner{
+  width:min(760px,100%);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+}
+
+.bottom button{
+  border:0;
+  background:none;
+  color:#aeb7d5;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:10px;
+}
+
+.bottom button span{
+  font-size:21px;
+}
+
+.bottom button.active{
+  color:white;
+}
+
+.bottom button.active span{
+  width:47px;
+  height:47px;
+  margin-top:-23px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#b328ff,#185fff);
+  border:2px solid #c83cff;
+  box-shadow:
+    0 0 18px #9d27ff,
+    0 0 35px rgba(41,90,255,.55);
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(8px);
+}
+
+.modal.show{
+  display:grid;
+}
+
+.modal-box{
+  width:min(450px,100%);
+  padding:25px;
+  border-radius:22px;
+  border:1px solid #7635ff;
+  background:linear-gradient(145deg,#101735,#070a1d);
+  box-shadow:0 0 45px rgba(112,37,255,.4);
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  right:14px;
+  top:12px;
+  border:0;
+  background:none;
+  color:white;
+  font-size:25px;
+}
+
+.modal-box h2{
+  margin-bottom:6px;
+}
+
+.modal-box p{
+  color:#a7b0ca;
+  font-size:12px;
+  margin-bottom:18px;
+}
+
+.form-group{
+  margin-bottom:12px;
+}
+
+.form-group label{
+  display:block;
+  font-size:11px;
+  margin-bottom:6px;
+  color:#b7c0db;
+}
+
+.form-group input{
+  width:100%;
+  padding:12px;
+  border-radius:11px;
+  border:1px solid #293f88;
+  outline:0;
+  color:white;
+  background:#060b20;
+}
+
+.submit{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:12px;
+  color:white;
+  font-weight:bold;
+  background:linear-gradient(90deg,#a625ff,#176eff);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:1050px){
+
+  .sidebar{
+    width:190px;
+  }
+
+  .main{
+    margin-left:190px;
+  }
+
+  .bottom{
+    left:190px;
+  }
+
+  .games{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .packages{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .dashboard{
+    grid-template-columns:1fr;
+  }
+
+  .right{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:720px){
+
+  body{
+    padding-bottom:70px;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+    padding:10px 10px 80px;
+  }
+
+  .topbar{
+    height:52px;
+  }
+
+  .search{
+    height:42px;
+  }
+
+  .top-actions .wallet,
+  .top-actions .profile{
+    display:none;
+  }
+
+  .top-actions{
+    gap:5px;
+  }
+
+  .hero{
+    height:430px;
+  }
+
+  .hero-content{
+    width:100%;
+    padding:24px 20px;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .hero h2{
+    font-size:18px;
+  }
+
+  .hero p{
+    max-width:75%;
+  }
+
+  .hero-points{
+    gap:8px;
+    flex-wrap:wrap;
+  }
+
+  .hero-point{
+    font-size:10px;
+  }
+
+  .hero-photo{
+    width:65%;
+    height:58%;
+    right:0;
+  }
+
+  .hero-crown{
+    right:28%;
+    top:48%;
+    font-size:30px;
+  }
+
+  .games{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .game{
+    padding:8px 4px;
+  }
+
+  .game-img{
+    width:47px;
+    height:47px;
+    font-size:23px;
+  }
+
+  .packages{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .trust{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .right{
+    display:flex;
+  }
+
+  .bottom{
+    left:0;
+    height:65px;
+  }
+
+  .bottom-inner{
+    width:100%;
+  }
+
+  .bottom button.active span{
+    width:43px;
+    height:43px;
+  }
+
+  .section-head h2{
+    font-size:15px;
+  }
+
+  .package-tabs button{
+    padding:7px 10px;
+  }
+}
+
+@media(max-width:390px){
+
+  .hero{
+    height:410px;
+  }
+
+  .hero h1{
+    font-size:29px;
+  }
+
+  .hero-photo{
+    width:70%;
+  }
+
+  .packages{
+    gap:7px;
+  }
+
+  .diamond{
+    font-size:38px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <div class="logo">
+    <div class="logo-mark">👑</div>
+    <div class="logo-text">
+      <strong>CHATNI<br>TOP UP</strong>
+      <span>চাটনি টপআপ</span>
+    </div>
+  </div>
+
+  <nav class="nav">
+
+    <button class="active" onclick="goHome()">
+      <span class="nav-icon">🏠</span>
+      Home
+    </button>
+
+    <button onclick="scrollToPackages()">
+      <span class="nav-icon">🎁</span>
+      Topup
+    </button>
+
+    <button onclick="showMessage('Trajection')">
+      <span class="nav-icon">📊</span>
+      Trajection
+    </button>
+
+    <button onclick="scrollToOrders()">
+      <span class="nav-icon">💌</span>
+      Live Order
+      <span class="badge">3</span>
+    </button>
+
+    <button onclick="scrollToSupport()">
+      <span class="nav-icon">🎧</span>
+      Support
+    </button>
+
+    <button onclick="showMessage('Setting')">
+      <span class="nav-icon">⚙️</span>
+      Setting
+    </button>
+
+  </nav>
+
+  <div class="premium">
+    <h3>👑 Premium User Benefits</h3>
+    <p>
+      💎 কমিশন ডিসকাউন্ট<br>
+      🎁 ফাস্ট সার্ভিস<br>
+      🛡️ এক্সক্লুসিভ অফার<br>
+      🎧 প্রায়োরিটি সাপোর্ট
+    </p>
+    <button onclick="showMessage('Premium')">
+      Upgrade Now →
+    </button>
+  </div>
+
+</aside>
+
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+
+    <div class="search">
+      <span>🔍</span>
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search for games, packages, or services..."
+        oninput="searchPackages()"
+      >
+    </div>
+
+    <div class="top-actions">
+
+      <button class="icon-btn">🔔</button>
+
+      <div class="wallet">
+        💎 <b>৳ 320</b>
+        <strong>＋</strong>
+      </div>
+
+      <div class="profile">
+        <img class="avatar" src="hero.jpg" alt="User">
+        <div class="profile-info">
+          <strong>Ahsan 👑</strong>
+          <span>Premium User</span>
+        </div>
+        <span>⌄</span>
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <div class="dashboard">
+
+    <section class="left">
+
+      <!-- HERO -->
+      <section class="hero">
+
+        <div class="hero-content">
+
+          <h1>CHATNI TOP UP</h1>
+
+          <h2>চাটনি টপআপ</h2>
+
+          <p>
+            “<b>শপিং হোক আরও সহজ,<br>
+            টপআপ হোক আরও নিরাপদ!</b>”
+          </p>
+
+          <div class="hero-points">
+
+            <div class="hero-point">
+              <i>ϟ</i>
+              Instant<br>Delivery
+            </div>
+
+            <div class="hero-point">
+              <i>🛡</i>
+              100% Secure<br>& Trusted
+            </div>
+
+            <div class="hero-point">
+              <i>♙</i>
+              24/7<br>Customer Support
+            </div>
+
+          </div>
+
+          <button class="hero-btn" onclick="scrollToPackages()">
+            Explore Packages →
+          </button>
+
+        </div>
+
+        <div class="hero-photo">
+          <img src="hero.jpg" alt="CHATNI TOP UP">
+        </div>
+
+        <div class="hero-crown">♕</div>
+
+      </section>
+
+
+      <!-- GAMES -->
+      <section class="section">
+
+        <div class="section-head">
+          <h2>🎮 Popular Games</h2>
+          <a href="#">View All Games →</a>
+        </div>
+
+        <div class="games">
+
+          <div class="game">
+            <div class="game-img">🔥</div>
+            <span>Free Fire</span>
+          </div>
+
+          <div class="game">
+            <div class="game-img">🎯</div>
+            <span>PUBG Mobile</span>
+          </div>
+
+          <div class="game">
+            <div class="game-img">⚽</div>
+            <span>eFootball</span>
+          </div>
+
+          <div class="game">
+            <div class="game-img">🔫</div>
+            <span>Call of Duty</span>
+          </div>
+
+          <div class="game">
+            <div class="game-img">⬛</div>
+            <span>Roblox</span>
+          </div>
+
+          <div class="game">
+            <div class="game-img">🔻</div>
+            <span>Valorant</span>
+          </div>
+
+          <div class="game">
+            <div class="game-img">🌸</div>
+            <span>Genshin</span>
+          </div>
+
+          <div class="game">
+            <div class="game-img">⚔️</div>
+            <span>Clash</span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- PACKAGES -->
+      <section class="section" id="packages">
+
+        <div class="section-head">
+
+          <h2>🔥 Topup Packages — <span style="color:#26bfff">Free Fire</span></h2>
+
+          <div class="package-tabs">
+            <button class="active">Diamonds</button>
+            <button onclick="showMessage('Weekly')">Weekly</button>
+            <button onclick="showMessage('Monthly')">Monthly</button>
+            <button onclick="showMessage('Special')">Special</button>
+          </div>
+
+        </div>
+
+        <div class="packages" id="packageList">
+
+          <div class="package">
+            <div class="diamond">💎</div>
+            <h3>25 Diamonds</h3>
+            <div class="price">৳ 23</div>
+            <button class="order-btn" onclick="order('25 Diamonds','৳23')">
+              Order Now →
+            </button>
+          </div>
+
+          <div class="package">
+            <div class="diamond">💎</div>
+            <h3>50 Diamonds</h3>
+            <div class="price">৳ 40</div>
+            <button class="order-btn" onclick="order('50 Diamonds','৳40')">
+              Order Now →
+            </button>
+          </div>
+
+          <div class="package popular">
+            <div class="diamond">💎</div>
+            <h3>115 Diamonds</h3>
+            <div class="price">৳ 82</div>
+            <button class="order-btn" onclick="order('115 Diamonds','৳82')">
+              Order Now →
+            </button>
+          </div>
+
+          <div class="package">
+            <div class="diamond">💎</div>
+            <h3>240 Diamonds</h3>
+            <div class="price">৳ 158</div>
+            <button class="order-btn" onclick="order('240 Diamonds','৳158')">
+              Order Now →
+            </button>
+          </div>
+
+          <div class="package">
+            <div class="diamond">💎</div>
+            <h3>610 Diamonds</h3>
+            <div class="price">৳ 392</div>
+            <button class="order-btn" onclick="order('610 Diamonds','৳392')">
+              Order Now →
+            </button>
+          </div>
+
+          <div class="package">
+            <div class="diamond">💎</div>
+            <h3>1240 Diamonds</h3>
+            <div class="price">৳ 780</div>
+            <button class="order-btn" onclick="order('1240 Diamonds','৳780')">
+              Order Now →
+            </button>
+          </div>
+
+          <div class="package">
+            <div class="diamond">💎</div>
+            <h3>2530 Diamonds</h3>
+            <div class="price">৳ 1560</div>
+            <button class="order-btn" onclick="order('2530 Diamonds','৳1560')">
+              Order Now →
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- TRUST -->
+      <div class="trust">
+
+        <div class="trust-item">
+          <b>🎁</b>
+          Fast Delivery
+        </div>
+
+        <div class="trust-item">
+          <b>⚡</b>
+          Safe & Secure
+        </div>
+
+        <div class="trust-item">
+          <b>♙</b>
+          24/7 Support
+        </div>
+
+        <div class="trust-item">
+          <b>👑</b>
+          Join Now
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RIGHT -->
+    <aside class="right">
+
+      <!-- LIVE ORDER -->
+      <div class="panel" id="orders">
+
+        <div class="panel-head">
+          <h3>🎮 Live Order</h3>
+          <a href="#">View All →</a>
+        </div>
+
+        <div class="orders">
+
+          <div class="order">
+            <div class="order-avatar">👨</div>
+            <div class="order-info">
+              <strong>Rafid_07</strong>
+              <span>Free Fire 310 Diamonds<br>2 mins ago</span>
+            </div>
+            <span class="status completed">Completed</span>
+          </div>
+
+          <div class="order">
+            <div class="order-avatar">🎮</div>
+            <div class="order-info">
+              <strong>Xgaming_BD</strong>
+              <span>PUBG UC 325+<br>5 mins ago</span>
+            </div>
+            <span class="status completed">Completed</span>
+          </div>
+
+          <div class="order">
+            <div class="order-avatar">👦</div>
+            <div class="order-info">
+              <strong>Sakib_05</strong>
+              <span>eFootball 540 Coins<br>8 mins ago</span>
+            </div>
+            <span class="status processing">Processing</span>
+          </div>
+
+          <div class="order">
+            <div class="order-avatar">👨</div>
+            <div class="order-info">
+              <strong>Tawhid_11</strong>
+              <span>Call of Duty CP 1080<br>12 mins ago</span>
+            </div>
+            <span class="status completed">Completed</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- SUPPORT -->
+      <div class="panel" id="support">
+
+        <div class="panel-head">
+          <h3>💬 Live Chat / Support</h3>
+          <span style="font-size:11px;color:#32ffad">● Online</span>
+        </div>
+
+        <div class="chat">
+
+          <div class="chat-msg">
+            <div class="chat-user">👨</div>
+            <div>
+              <strong>Admin</strong>
+              <p>Hello! How can I help you?</p>
+            </div>
+          </div>
+
+          <div class="chat-msg">
+            <div class="chat-user">👦</div>
+            <div>
+              <strong>Rakib_98</strong>
+              <p>My order is processing...</p>
+            </div>
+          </div>
+
+          <div class="chat-msg">
+            <div class="chat-user">👨</div>
+            <div>
+              <strong>Admin</strong>
+              <p>Please wait, it will be completed soon. ✅</p>
+            </div>
+          </div>
+
+          <div class="chat-input">
+            <input id="chatInput" placeholder="Type a message...">
+            <button onclick="sendChat()">➤</button>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ANNOUNCEMENT -->
+      <div class="panel">
+
+        <div class="panel-head">
+          <h3>👑 Latest Announcements</h3>
+          <a href="#">View All →</a>
+        </div>
+
+        <div class="announcement">
+
+          <div class="announce">
+            <div class="announce-icon">🎁</div>
+            <div>
+              <strong>New Discount Offer!</strong>
+              <p>Get special offers on selected packages.</p>
+            </div>
+          </div>
+
+          <div class="announce">
+            <div class="announce-icon">🛠️</div>
+            <div>
+              <strong>Server Maintenance</strong>
+              <p>Short maintenance may happen.</p>
+            </div>
+          </div>
+
+          <div class="announce">
+            <div class="announce-icon">💳</div>
+            <div>
+              <strong>New Payment Method</strong>
+              <p>More payment options coming soon.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+</main>
+
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom">
+
+  <div class="bottom-inner">
+
+    <button class="active" onclick="goHome()">
+      <span>🏠</span>
+      Home
+    </button>
+
+    <button onclick="scrollToPackages()">
+      <span>💎</span>
+      Topup
+    </button>
+
+    <button onclick="showMessage('Trajection')">
+      <span>📊</span>
+      Trajection
+    </button>
+
+    <button onclick="scrollToOrders()">
+      <span>💬</span>
+      Live
+    </button>
+
+    <button onclick="scrollToSupport()">
+      <span>🎧</span>
+      Support
+    </button>
+
+  </div>
+
+</nav>
+
+
+<!-- ORDER MODAL -->
+<div class="modal" id="orderModal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeModal()">×</button>
+
+    <h2>💎 Place Your Order</h2>
+
+    <p id="selectedPackage">
+      Select your package
+    </p>
+
+    <div class="form-group">
+      <label>Free Fire UID</label>
+      <input id="uid" placeholder="Enter your UID">
+    </div>
+
+    <div class="form-group">
+      <label>Payment Transaction ID</label>
+      <input id="trx" placeholder="Enter transaction ID">
+    </div>
+
+    <div class="form-group">
+      <label>Mobile Number</label>
+      <input id="phone" placeholder="01XXXXXXXXX">
+    </div>
+
+    <button class="submit" onclick="submitOrder()">
+      Submit Order 🚀
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+let selectedPackage = "";
+
+function scrollToPackages(){
+  document.getElementById("packages").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+
+function scrollToOrders(){
+  document.getElementById("orders").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+}
+
+function scrollToSupport(){
+  document.getElementById("support").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+}
+
+function goHome(){
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+function showMessage(text){
+  alert(text + " section coming soon 🚀");
+}
+
+function order(name,price){
+
+  selectedPackage = name + " — " + price;
+
+  document.getElementById("selectedPackage").textContent =
+    "Selected: " + selectedPackage;
+
+  document.getElementById("orderModal").classList.add("show");
+}
+
+function closeModal(){
+  document.getElementById("orderModal").classList.remove("show");
+}
+
+function submitOrder(){
+
+  const uid = document.getElementById("uid").value.trim();
+  const trx = document.getElementById("trx").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+
+  if(!uid || !trx || !phone){
+    alert("সব তথ্য পূরণ করুন।");
+    return;
+  }
+
+  alert(
+    "✅ Order Submitted!\n\n" +
+    selectedPackage +
+    "\nUID: " + uid +
+    "\nTRX: " + trx
+  );
+
+  document.getElementById("uid").value="";
+  document.getElementById("trx").value="";
+  document.getElementById("phone").value="";
+
+  closeModal();
+}
+
+function sendChat(){
+
+  const input = document.getElementById("chatInput");
+
+  if(!input.value.trim()){
+    return;
+  }
+
+  alert("Message sent: " + input.value);
+
+  input.value="";
+}
+
+function searchPackages(){
+
+  const query =
+    document.getElementById("searchInput").value.toLowerCase();
+
+  const packages =
+    document.querySelectorAll(".package");
+
+  packages.forEach(card => {
+
+    const text = card.innerText.toLowerCase();
+
+    card.style.display =
+      text.includes(query) ? "" : "none";
+
+  });
+}
+
+document.addEventListener("keydown",function(e){
+
+  if(e.key==="Escape"){
+    closeModal();
+  }
+
+});
+
+</script>
+
+</body>
+  </html>
